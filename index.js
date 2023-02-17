@@ -12,12 +12,12 @@ const invokeAction = async ({ action, id, name, email, phone }) => {
       await contactsMethods.getContactById(id);
       break;
 
-    case "add":
-      await contactsMethods.addContact(name, email, phone);
-      break;
-
     case "remove":
       await contactsMethods.removeContact(id);
+      break;
+
+    case "add":
+      await contactsMethods.addContact(name, email, phone);
       break;
 
     default:
