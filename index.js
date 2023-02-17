@@ -1,10 +1,28 @@
-const express = require("express");
-const router = require("./routes/router");
+const argv = require("yargs").argv;
+console.log(argv);
+const contactsMethods = require("./contacts");
 
-const app = express();
-const PORT = 9348;
+const invokeAction = async ({ action, id, name, email, phone }) => {
+  switch (action) {
+    case "list":
+      await contactsMethods.listContacts();
+      break;
 
-app.use(express.json());
-app.use(router);
+    case "get":
+      await contactsMethods.getContactById(id);
+      break;
 
-app.listen(PORT, () => console.log(`server work on port:${PORT}`));
+    case "add":
+      await contactsMethods.addContact(name, email, phone);
+      break;
+
+    case "remove":
+      await contactsMethods.removeContact(id);
+      break;
+
+    default:
+      console.warn("\x1B[31m Unknown action type!");
+  }
+};
+
+invokeAction(argv);
